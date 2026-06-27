@@ -4,14 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kyrsten Stewart Portfolio</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
+}
+
+.dark-mode a {
+    color: lightblue;
+}
+
+.featured {
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px 0;
+}
+</style>
+
 </head>
 
 <body>
+
+<label>
+    <input type="checkbox" id="darkMode">
+    Dark Mode
+</label>
 
 <h1 id="welcome">Welcome!</h1>
 
 <nav>
     <a href="#about">About</a> |
+    <a href="#featured">Featured Content</a> |
     <a href="#projects">Projects</a> |
     <a href="#contact">Contact</a>
 </nav>
@@ -20,34 +48,68 @@
 
 <section id="about">
     <h2>About Me</h2>
+
     <p>
         My name is Kyrsten Stewart. I am currently pursuing a degree in
-        Data Analytics, but have already graduated with my Bachelors degree in Business Administration and have experience working with veterans and
-        community outreach programs. I enjoy learning web development,
-        programming, and creating meaningful projects.
+        Data Analytics. I enjoy learning HTML, CSS, JavaScript, and
+        creating websites.
     </p>
+
+    <h3>Skills</h3>
+    <ul id="skillsList"></ul>
+
+</section>
+
+<section id="featured">
+
+    <h2>Featured Content</h2>
+
+    <div id="resourcesDiv" class="featured">
+
+        <h3>University Resources</h3>
+
+        <a href="https://my.ecpi.edu/" target="_blank">
+            ECPI Student Portal
+        </a><br>
+
+        <a href="https://www.ecpi.edu/" target="_blank">
+            ECPI University
+        </a>
+
+    </div>
+
+    <div id="projectsDiv" class="featured">
+
+        <h3>Personal Projects</h3>
+
+        <a href="https://github.com/">
+            <img src="https://via.placeholder.com/150" alt="Project">
+        </a>
+
+    </div>
+
 </section>
 
 <section id="projects">
+
     <h2>Projects</h2>
 
     <a href="https://github.com/">
-        <img src="https://via.placeholder.com/150"
-             alt="Project 1">
+        <img src="https://via.placeholder.com/150" alt="Project 1">
     </a>
 
     <a href="https://github.com/">
-        <img src="https://via.placeholder.com/150"
-             alt="Project 2">
+        <img src="https://via.placeholder.com/150" alt="Project 2">
     </a>
 
     <a href="https://github.com/">
-        <img src="https://via.placeholder.com/150"
-             alt="Project 3">
+        <img src="https://via.placeholder.com/150" alt="Project 3">
     </a>
+
 </section>
 
 <section id="contact">
+
     <h2>Contact</h2>
 
     <form>
@@ -64,16 +126,69 @@
         <label for="message">Message:</label><br>
         <textarea id="message"></textarea><br><br>
 
-        <input type="submit" value="Send">
+        <input type="submit" id="submitBtn" value="Send">
 
     </form>
+
 </section>
 
 <script>
-    let userName = prompt("What is your name?");
 
-    document.getElementById("welcome").innerHTML =
-        "Welcome, " + userName + "!";
+var userName = prompt("What is your name?");
+
+document.getElementById("welcome").innerHTML =
+"Welcome, " + userName + "!";
+
+var skills = ["HTML", "CSS", "JavaScript", "Python", "Data Analytics"];
+
+var skillsList = document.getElementById("skillsList");
+
+for (var i = 0; i < skills.length; i++) {
+
+    var item = document.createElement("li");
+    item.textContent = skills[i];
+    skillsList.appendChild(item);
+
+}
+
+var projectCount = document.querySelectorAll("#projects a").length;
+
+if (projectCount < 3) {
+
+    document.getElementById("resourcesDiv").style.display = "block";
+    document.getElementById("projectsDiv").style.display = "block";
+
+} else {
+
+    document.getElementById("resourcesDiv").style.display = "none";
+    document.getElementById("projectsDiv").style.display = "block";
+
+}
+
+var darkMode = document.getElementById("darkMode");
+
+darkMode.addEventListener("change", function () {
+
+    if (darkMode.checked) {
+        document.body.classList.add("dark-mode");
+    } else {
+        document.body.classList.remove("dark-mode");
+    }
+
+});
+
+var submitButton = document.getElementById("submitBtn");
+
+submitButton.addEventListener("click", function (event) {
+
+    event.preventDefault();
+
+    var name = document.getElementById("name").value;
+
+    alert("Thank you, " + name + ", your message has been sent!");
+
+});
+
 </script>
 
 </body>
