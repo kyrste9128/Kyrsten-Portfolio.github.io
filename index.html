@@ -128,17 +128,21 @@ body {
 
         <input type="submit" id="submitBtn" value="Send">
 
+        <p id="status"></p>
+
     </form>
 
 </section>
 
 <script>
 
+// Ask for user's name
 var userName = prompt("What is your name?");
 
 document.getElementById("welcome").innerHTML =
 "Welcome, " + userName + "!";
 
+// Display skills using a loop
 var skills = ["HTML", "CSS", "JavaScript", "Python", "Data Analytics"];
 
 var skillsList = document.getElementById("skillsList");
@@ -151,6 +155,7 @@ for (var i = 0; i < skills.length; i++) {
 
 }
 
+// Show or hide Featured Content
 var projectCount = document.querySelectorAll("#projects a").length;
 
 if (projectCount < 3) {
@@ -165,6 +170,7 @@ if (projectCount < 3) {
 
 }
 
+// Dark Mode
 var darkMode = document.getElementById("darkMode");
 
 darkMode.addEventListener("change", function () {
@@ -177,15 +183,31 @@ darkMode.addEventListener("change", function () {
 
 });
 
+// Dynamically add a new paragraph
+var newProject = document.createElement("p");
+newProject.textContent = "Recent Project: Portfolio Website";
+document.getElementById("projects").appendChild(newProject);
+
+// Modify existing elements
+document.getElementById("about").style.border = "2px solid black";
+document.querySelector("#projects h2").textContent = "My Projects";
+
+// Contact Form
 var submitButton = document.getElementById("submitBtn");
 
 submitButton.addEventListener("click", function (event) {
 
     event.preventDefault();
 
-    var name = document.getElementById("name").value;
+    var status = document.getElementById("status");
 
-    alert("Thank you, " + name + ", your message has been sent!");
+    status.textContent = "Sending message...";
+
+    setTimeout(function () {
+
+        status.textContent = "Message sent successfully!";
+
+    }, 2000);
 
 });
 
