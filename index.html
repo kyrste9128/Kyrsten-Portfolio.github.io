@@ -24,11 +24,43 @@ body {
     padding: 10px;
     margin: 10px 0;
 }
+
+/* Modal */
+.modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: white;
+    width: 300px;
+    margin: 15% auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.dark-mode .modal-content {
+    color: black;
+}
 </style>
 
 </head>
 
 <body>
+
+<!-- Welcome Modal -->
+<div id="welcomeModal" class="modal">
+    <div class="modal-content">
+        <p>This page is a work in progress.</p>
+        <button id="closeModal">Close</button>
+    </div>
+</div>
 
 <label>
     <input type="checkbox" id="darkMode">
@@ -126,7 +158,7 @@ body {
         <label for="message">Message:</label><br>
         <textarea id="message"></textarea><br><br>
 
-        <input type="submit" id="submitBtn" value="Send">
+        <input type="submit" id="submitBtn" value="Send" title="Click to send your message!">
 
         <p id="status"></p>
 
@@ -136,54 +168,55 @@ body {
 
 <script>
 
-// Ask for user's name
-var userName = prompt("What is your name?");
+// Close modal
+document.getElementById("closeModal").addEventListener("click", function () {
+    document.getElementById("welcomeModal").style.display = "none";
+});
 
-document.getElementById("welcome").innerHTML =
-"Welcome, " + userName + "!";
-
-// Display skills using a loop
+// Display skills
 var skills = ["HTML", "CSS", "JavaScript", "Python", "Data Analytics"];
 
 var skillsList = document.getElementById("skillsList");
 
 for (var i = 0; i < skills.length; i++) {
-
     var item = document.createElement("li");
     item.textContent = skills[i];
     skillsList.appendChild(item);
-
 }
 
 // Show or hide Featured Content
 var projectCount = document.querySelectorAll("#projects a").length;
 
 if (projectCount < 3) {
-
     document.getElementById("resourcesDiv").style.display = "block";
     document.getElementById("projectsDiv").style.display = "block";
-
 } else {
-
     document.getElementById("resourcesDiv").style.display = "none";
     document.getElementById("projectsDiv").style.display = "block";
-
 }
 
 // Dark Mode
 var darkMode = document.getElementById("darkMode");
 
+// Check saved preference
+if (localStorage.getItem("darkMode") === "on") {
+    document.body.classList.add("dark-mode");
+    darkMode.checked = true;
+}
+
 darkMode.addEventListener("change", function () {
 
     if (darkMode.checked) {
         document.body.classList.add("dark-mode");
+        localStorage.setItem("darkMode", "on");
     } else {
         document.body.classList.remove("dark-mode");
+        localStorage.setItem("darkMode", "off");
     }
 
 });
 
-// Dynamically add a new paragraph
+// Dynamically add a paragraph
 var newProject = document.createElement("p");
 newProject.textContent = "Recent Project: Portfolio Website";
 document.getElementById("projects").appendChild(newProject);
@@ -204,9 +237,7 @@ submitButton.addEventListener("click", function (event) {
     status.textContent = "Sending message...";
 
     setTimeout(function () {
-
         status.textContent = "Message sent successfully!";
-
     }, 2000);
 
 });
