@@ -120,23 +120,11 @@ body {
 
     </div>
 
-</section>
-
 <section id="projects">
 
     <h2>Projects</h2>
 
-    <a href="https://github.com/">
-        <img src="https://via.placeholder.com/150" alt="Project 1">
-    </a>
-
-    <a href="https://github.com/">
-        <img src="https://via.placeholder.com/150" alt="Project 2">
-    </a>
-
-    <a href="https://github.com/">
-        <img src="https://via.placeholder.com/150" alt="Project 3">
-    </a>
+    <div id="projectList"></div>
 
 </section>
 
@@ -216,14 +204,62 @@ darkMode.addEventListener("change", function () {
 
 });
 
-// Dynamically add a paragraph
-var newProject = document.createElement("p");
-newProject.textContent = "Recent Project: Portfolio Website";
-document.getElementById("projects").appendChild(newProject);
-
 // Modify existing elements
 document.getElementById("about").style.border = "2px solid black";
 document.querySelector("#projects h2").textContent = "My Projects";
+
+// Project objects
+var projects = [
+
+{
+    title: "Portfolio Website",
+    summary: "A personal portfolio created with HTML, CSS, and JavaScript.",
+    link: "https://github.com/"
+},
+
+{
+    title: "JavaScript Calculator",
+    summary: "A calculator that performs basic math operations.",
+    image: "https://via.placeholder.com/151",
+    link: "https://github.com/"
+},
+
+{
+    title: "Bill Splitter",
+    summary: "A web application that calculates tips and splits a bill.",
+    image: "https://via.placeholder.com/151",
+    link: "https://github.com/"
+}
+
+];
+
+// Save to session storage if it doesn't exist
+if (sessionStorage.getItem("projects") == null) {
+
+    sessionStorage.setItem("projects", JSON.stringify(projects));
+
+} else {
+
+    projects = JSON.parse(sessionStorage.getItem("projects"));
+
+}
+
+// Display projects
+var projectList = document.getElementById("projectList");
+
+for (var i = 0; i < projects.length; i++) {
+
+    var div = document.createElement("div");
+
+    div.innerHTML =
+        "<h3>" + projects[i].title + "</h3>" +
+        "<p>" + projects[i].summary + "</p>" +
+        "<img src='" + projects[i].image + "' alt='Project'><br>" +
+        "<a href='" + projects[i].link + "' target='_blank'>Repository</a><hr>";
+
+    projectList.appendChild(div);
+
+}
 
 // Contact Form
 var submitButton = document.getElementById("submitBtn");
